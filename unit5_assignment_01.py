@@ -1,0 +1,60 @@
+__author__ = 'Kalyan'
+
+notes = '''
+Though it might appear as if the given tests should be able to catch all logical bugs in de_dup_and_sort, that is not the
+case as the code below shows.
+
+So be clear that some blackbox tests alone are no substitute for reasoning/taking care of the correctness yourself.
+
+Now add a test that fails with the given code. You can assume that inputs are of right type.
+'''
+def de_dup_and_sort(input):
+	"""
+	Given an input list of strings, return a list in which the duplicates are removed and the items are sorted.
+	"""
+	input = set(input)
+	input = list(input)
+	li=[]
+	if len(input)==0:
+		return li
+	elif len(input[0])!=1:
+		if ord(input[0][0]) > ord(input[1][0]):
+			li.append(input[1])
+			li.append(input[0])
+		else:
+			li.append(input[0])
+			li.append(input[1])	
+		return li	
+
+	else:   
+		for i in range(0,len(input)):
+			li.append(ord(input[i]))
+		li.sort()
+		li2=[]
+		for i in range(0,len(li)):
+			if li[i]<=90:
+				li2.append(chr(li[i]))
+			else:
+				li2.append(chr(li[i]))
+		return li2
+
+# add an test input that fails with above code and then fix the above code.
+def test_de_dup_and_sort_student():
+	pass
+	assert ['A', 'C', 'P', 'Z', 'a', 'b']==de_dup_and_sort(['b', 'P', 'b', 'C','A','a','Z','b','a'])
+
+def test_de_dup_and_sort():
+	assert ['a', 'b']==de_dup_and_sort(['b', 'a', 'b', 'a'])
+	assert ['a']==de_dup_and_sort(['a', 'a', 'a'])
+	assert [] == de_dup_and_sort([])
+	assert ['a', 'b'] == de_dup_and_sort(['a', 'b'])
+	assert ['a', 'b'] == de_dup_and_sort(['a', 'b']*10)
+	assert ['banana', 'orange']==de_dup_and_sort(["orange", "banana", "orange"])
+
+
+# this will run only on our runs and will be skipped on your computers.
+# DO NOT EDIT
+import pytest
+def test_de_dup_and_sort_server():
+	servertests  = pytest.importorskip("unit5_server_tests")
+	servertests.test_de_dup_and_sort(de_dup_and_sort)
